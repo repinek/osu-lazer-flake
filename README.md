@@ -1,7 +1,7 @@
 # osu!lazer for Nix
 
-<a href="https://github.com/ppy/osu/releases/tag/2026.726.0-lazer">
-  <img src="https://img.shields.io/badge/lazer-2026.726.0-ff66aa" alt="lazer version" />
+<a href="https://github.com/ppy/osu/releases/tag/2026.804.2-lazer">
+  <img src="https://img.shields.io/badge/lazer-2026.804.2-ff66aa" alt="lazer version" />
 </a>
 <a href="https://github.com/ppy/osu/releases/tag/2026.821.0-tachyon">
   <img src="https://img.shields.io/badge/tachyon-2026.821.0-8866ee" alt="Tachyon version" />
@@ -13,8 +13,8 @@ The `osu-lazer-bin` package in nixpkgs may not have the latest version and there
 
 This flake packages the official AppImages for both:
 
-- `osu-lazer-bin` — the regular lazer release
-- `osu-lazer-tachyon-bin` — the Tachyon pre-release
+- `osu-lazer-bin` - the regular lazer release
+- `osu-lazer-tachyon-bin` - the Tachyon pre-release
 
 > [!NOTE]
 > The official AppImages include osu!'s proprietary anti-cheat required for
@@ -24,7 +24,7 @@ Only `x86_64-linux` is supported. Both packages install the same `osu!` executab
 
 ## Installation
 
-### Nix-shell
+### Run temporarily 
 
 ```bash
 # For lazer
@@ -46,6 +46,16 @@ Add the flake to your inputs:
     inputs.nixpkgs.follows = "nixpkgs";
   };
 }
+```
+
+Pass `inputs` to your NixOS modules:
+
+```nix
+# flake.nix
+nixosConfigurations.your-host = nixpkgs.lib.nixosSystem {
+  specialArgs = { inherit inputs; };
+  modules = [ ./configuration.nix ];
+};
 ```
 
 Then add one of the packages to your system:
@@ -75,8 +85,8 @@ environment.systemPackages = [
 
 ## TODO
 
-- [ ] update workflow
-- [ ] built from source pkgs
+- [ ] Automatic update workflow
+- [ ] Source-built packages
 
 ## License
 
@@ -85,4 +95,5 @@ See the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgements
 
-[nixpkgs osu-lazer-bin](https://github.com/NixOS/nixpkgs/blob/69749a48216c60ec366616baa7c78d75b1b88038/pkgs/by-name/os/osu-lazer-bin/package.nix)
+Based on the
+[`osu-lazer-bin` package from nixpkgs](https://github.com/NixOS/nixpkgs/blob/69749a48216c60ec366616baa7c78d75b1b88038/pkgs/by-name/os/osu-lazer-bin/package.nix).

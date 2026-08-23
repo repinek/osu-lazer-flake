@@ -4,7 +4,7 @@
   fetchurl,
   makeWrapper,
   appimageTools,
-  nativeWayland ? true,
+  nativeWayland ? false,
 }:
 let
   pname = "osu-lazer-tachyon-bin";

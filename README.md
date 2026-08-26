@@ -1,5 +1,8 @@
 # osu!lazer for Nix
 
+> [!IMPORTANT]
+> This is an unofficial, community Nix flake. 
+
 <a href="https://github.com/ppy/osu/releases/tag/2026.804.2-lazer">
   <img src="https://img.shields.io/badge/lazer-2026.804.2-ff66aa" alt="lazer version" />
 </a>
@@ -92,6 +95,11 @@ environment.systemPackages = [
 
 This project is licensed under the **MIT License**.  
 See the [LICENSE](LICENSE) file for details.
+
+## Disclaimer
+This project is **NOT** affiliated with or endorsed by ppy or osu!.
+
+**osu!** is a trademark of **ppy**.
 
 ## Acknowledgements
 

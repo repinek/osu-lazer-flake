@@ -30,8 +30,10 @@ let
     && !hasInfix "\n" path # Path does not have "\n"
     && !(any (part: part == "..") (splitString "/" path)); # Path does not have ".."
 
-  isValidSettingName = name: !hasInfix "\n" name && !hasInfix "=" name; # Setting Name does not have "\n" or "="
-  isValidSettingValue = value: !builtins.isString value || !hasInfix "\n" value; # Setting Value (strings) does not have "\n"
+  isValidSettingName = name: builtins.match "^[A-Za-z]+$" name != null; # Setting name contains only letters
+  isValidSettingValue =
+    value:
+    !builtins.isString value || (!hasInfix "\n" value && !hasInfix "\r" value); # String values do not contain newlines
 
   isValidSettings =
     settings:
@@ -177,19 +179,19 @@ in
     assertions = [
       {
         assertion = cfg.storagePath == null || isValidRelativePath cfg.storagePath;
-        message = "programs.osu-lazer.storagePath must be a non-empty relative path without '..'";
+        message = "programs.osu-lazer.storagePath must be a non-empty relative path without '..' or newlines";
       }
       {
         assertion = all isValidRelativePath (attrNames cfg.files);
-        message = "programs.osu-lazer.files keys must be non-empty relative paths without '..'";
+        message = "programs.osu-lazer.files keys must be non-empty relative paths without '..' or newlines";
       }
       {
         assertion = isValidSettings cfg.defaultSettings;
-        message = "programs.osu-lazer.defaultSettings keys cannot contain '=' or newlines, and string values cannot contain newlines";
+        message = "programs.osu-lazer.defaultSettings keys must contain only ASCII letters, and string values cannot contain line breaks";
       }
       {
         assertion = all (file: isValidSettings file.settings) (attrValues cfg.files);
-        message = "programs.osu-lazer.files.<path>.settings keys cannot contain '=' or newlines, and string values cannot contain newlines";
+        message = "programs.osu-lazer.files.<path>.settings keys must contain only ASCII letters, and string values cannot contain line breaks";
       }
     ];
 

@@ -103,5 +103,4 @@ This project is **NOT** affiliated with or endorsed by ppy or osu!.
 
 ## Acknowledgements
 
-Based on the
-[`osu-lazer-bin` package from nixpkgs](https://github.com/NixOS/nixpkgs/blob/69749a48216c60ec366616baa7c78d75b1b88038/pkgs/by-name/os/osu-lazer-bin/package.nix).
+Based on the [`osu-lazer-bin` package from nixpkgs](https://github.com/NixOS/nixpkgs/blob/69749a48216c60ec366616baa7c78d75b1b88038/pkgs/by-name/os/osu-lazer-bin/package.nix).

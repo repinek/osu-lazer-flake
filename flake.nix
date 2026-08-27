@@ -37,5 +37,7 @@
           osu-lazer-tachyon-bin = pkgs.callPackage ./osu-lazer-tachyon-bin { };
         }
       );
+
+      homeManagerModules.default = import ./modules/home-manager.nix { inherit self; };
     };
 }

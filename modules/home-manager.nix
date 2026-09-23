@@ -12,7 +12,7 @@ let
   osuPackages = self.packages.${pkgs.stdenv.hostPlatform.system};
 
   # osu's game.ini accepts only these types
-  settingsType =
+  iniSettingsType =
     with types;
     attrsOf (oneOf [
       bool
@@ -32,8 +32,7 @@ let
 
   isValidSettingName = name: builtins.match "^[A-Za-z]+$" name != null; # Setting name contains only letters
   isValidSettingValue =
-    value:
-    !builtins.isString value || (!hasInfix "\n" value && !hasInfix "\r" value); # String values do not contain newlines
+    value: !builtins.isString value || (!hasInfix "\n" value && !hasInfix "\r" value); # String values do not contain newlines
 
   isValidSettings =
     settings:
@@ -148,13 +147,21 @@ in
       description = "Whether to enable native Wayland support.";
     };
 
+    channel = mkOption {
+      type = types.enum [
+        "lazer"
+        "tachyon"
+      ];
+      default = "lazer";
+    };
+
     storagePath = mkOption {
       type = types.nullOr types.str;
       default = null;
     };
 
-    defaultSettings = mkOption {
-      type = settingsType;
+    gameSettings = mkOption {
+      type = iniSettingsType;
       default = { };
     };
 
@@ -163,8 +170,13 @@ in
         types.submodule (
           { ... }:
           {
-            options.settings = mkOption {
-              type = settingsType;
+            options.gameSettings = mkOption {
+              type = iniSettingsType;
+              default = { };
+            };
+
+            options.frameworkSettings = mkOption {
+              type = iniSettingsType;
               default = { };
             };
           }
@@ -185,19 +197,19 @@ in
         assertion = all isValidRelativePath (attrNames cfg.files);
         message = "programs.osu-lazer.files keys must be non-empty relative paths without '..' or newlines";
       }
-      {
-        assertion = isValidSettings cfg.defaultSettings;
-        message = "programs.osu-lazer.defaultSettings keys must contain only ASCII letters, and string values cannot contain line breaks";
-      }
-      {
-        assertion = all (file: isValidSettings file.settings) (attrValues cfg.files);
-        message = "programs.osu-lazer.files.<path>.settings keys must contain only ASCII letters, and string values cannot contain line breaks";
-      }
+      # {
+      #   assertion = isValidSettings cfg.defaultSettings;
+      #   message = "programs.osu-lazer.defaultSettings keys must contain only ASCII letters, and string values cannot contain line breaks";
+      # }
+      # {
+      #   assertion = all (file: isValidSettings file.settings) (attrValues cfg.files);
+      #   message = "programs.osu-lazer.files.<path>.settings keys must contain only ASCII letters, and string values cannot contain line breaks";
+      # }
     ];
 
     home.packages = optional (cfg.package != null) (
       cfg.package.override {
-        inherit (cfg) nativeWayland;
+        inherit (cfg) channel nativeWayland;
       }
     );
 
@@ -211,17 +223,17 @@ in
         '';
       })
 
-      (mkIf (cfg.defaultSettings != { }) {
-        osuLazerDefaultSettings = hm.dag.entryAfter [ "writeBoundary" ] ''
-          run ${mergeIni} ${escapeShellArg "${osuDataDirectory}/game.ini"} ${escapeShellArg (toString defaultSettingsSource)}
-        '';
-      })
+      # (mkIf (cfg.defaultSettings != { }) {
+      #   osuLazerDefaultSettings = hm.dag.entryAfter [ "writeBoundary" ] ''
+      #     run ${mergeIni} ${escapeShellArg "${osuDataDirectory}/game.ini"} ${escapeShellArg (toString defaultSettingsSource)}
+      #   '';
+      # })
 
-      (mkIf (configuredFiles != { }) {
-        osuLazerFileSettings = hm.dag.entryAfter [ "writeBoundary" ] ''
-          ${filesSettingsScript}
-        '';
-      })
+      # (mkIf (configuredFiles != { }) {
+      #   osuLazerFileSettings = hm.dag.entryAfter [ "writeBoundary" ] ''
+      #     ${filesSettingsScript}
+      #   '';
+      # })
     ];
   };
 }

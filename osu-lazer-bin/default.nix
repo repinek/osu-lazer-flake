@@ -4,17 +4,45 @@
   fetchurl,
   makeWrapper,
   appimageTools,
+  channel ? "lazer",
   nativeWayland ? false,
+  extraShellArgs ? [ ],
 }:
 let
   pname = "osu-lazer-bin";
-  version = "2026.804.2";
+
+  releases = {
+    lazer = {
+      version = "2026.921.0";
+      tag = "lazer";
+      hash = "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0=";
+    };
+
+    tachyon = {
+      version = "2026.921.0";
+      tag = "tachyon";
+      hash = "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0=";
+    };
+  };
+
+  release =
+    if channel == "lazer" then
+      releases.lazer
+    else if channel == "tachyon" then
+      if lib.versionOlder releases.lazer.version releases.tachyon.version then
+        releases.tachyon
+      else
+        releases.lazer
+    else
+      throw "osu-lazer-bin: channel must be \"lazer\" or \"tachyon\"";
+
+  inherit (release) version tag hash;
 
   src =
     {
       x86_64-linux = fetchurl {
-        url = "https://github.com/ppy/osu/releases/download/${version}-lazer/osu.AppImage";
-        hash = "sha256-0K/dyvIwrlBzcexYDCCilNknJdEZja1OTfAotP6MvjY=";
+        url = "https://github.com/ppy/osu/releases/download/${version}-${tag}/osu.AppImage";
+        inherit hash;
       };
     }
     .${stdenvNoCC.system} or (throw "osu-lazer-bin: ${stdenvNoCC.system} is unsupported.");
@@ -54,6 +82,7 @@ appimageTools.wrapType2 (finalAttrs: {
     mv -v $out/bin/${pname} $out/bin/osu!
 
     wrapProgram $out/bin/osu! \
+      ${lib.escapeShellArgs extraShellArgs} \
       ${lib.optionalString nativeWayland "--set SDL_VIDEODRIVER wayland"} \
       --set OSU_EXTERNAL_UPDATE_PROVIDER 1
 

@@ -11,7 +11,7 @@ let
   ini = import ./ini.nix { inherit pkgs lib; };
 
   osuDataDirectory = "${config.xdg.dataHome}/osu";
-  customStoragePath = "${config.home.homeDirectory}/${cfg.storagePath}";
+  customStoragePath = cfg.storagePath;
 
   hasFileSettings = file: file.gameSettings != { } || file.frameworkSettings != { };
 
@@ -24,7 +24,7 @@ let
     mapAttrsToList (
       path: file:
       let
-        directory = "${config.home.homeDirectory}/${path}";
+        directory = path;
       in
       ''
         ${optionalString (file.gameSettings != { }) (

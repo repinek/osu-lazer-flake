@@ -1,6 +1,6 @@
 { lib, pkgs }:
 rec {
-  # osu's INI files require boolean values with an uppercase first letter
+  # osu!'s INI files require boolean values with an uppercase first letter
   formatValue =
     value: if builtins.isBool value then if value then "True" else "False" else builtins.toString value;
 
@@ -13,7 +13,7 @@ rec {
 
   writeSettingsFile = name: settings: pkgs.writeText name (renderSettings settings);
 
-  # Merge managed settings from the Nix store into a mutable osu INI file
+  # Merge managed settings from the Nix store into a mutable osu! INI file
   # Configured keys override existing values while unmanaged settings are preserved
   #
   # Tokens, leaderboard state, skins, and other mutable values cannot live in

@@ -11,7 +11,7 @@ let
 
   osuPackages = self.packages.${pkgs.stdenv.hostPlatform.system};
 
-  # osu's ini files accepts only these types
+  # osu's INI files only accepts these types
   iniSettingsType =
     with types;
     attrsOf (oneOf [

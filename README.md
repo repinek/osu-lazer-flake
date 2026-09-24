@@ -125,6 +125,11 @@ programs.osu-lazer = {
 };
 ```
 
+## TODO
+
+- [ ] Auto Update script 
+- [ ] add `input.json` to home-manager options 
+
 ## License
 
 This project is licensed under the **MIT License**.  

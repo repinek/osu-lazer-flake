@@ -22,7 +22,6 @@
                 pkg:
                 builtins.elem (nixpkgs.lib.getName pkg) [
                   "osu-lazer-bin"
-                  "osu-lazer-tachyon-bin"
                 ];
             };
           }
@@ -34,8 +33,9 @@
       packages = forEachSupportedSystem (
         { pkgs }: {
           osu-lazer-bin = pkgs.callPackage ./osu-lazer-bin { };
-          osu-lazer-tachyon-bin = pkgs.callPackage ./osu-lazer-tachyon-bin { };
         }
       );
+
+      homeManagerModules.osu-lazer = import ./modules/home-manager.nix { inherit self; };
     };
 }

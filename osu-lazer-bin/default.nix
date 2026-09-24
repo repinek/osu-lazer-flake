@@ -19,9 +19,9 @@ let
     };
 
     tachyon = {
-      version = "2026.921.0";
+      version = "2026.918.0";
       tag = "tachyon";
-      hash = "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0=";
+      hash = "sha256-4wwtNWDqghwuJyvKz8pXuy0UfKAlwamV7UW82im6CFQ=";
     };
   };
 

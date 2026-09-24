@@ -44,6 +44,11 @@ in
       default = "lazer";
     };
 
+    extraShellArgs = mkOption {
+      type = types.listOf types.str;
+      default = [ ];
+    };
+
     storagePath = mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -86,7 +91,7 @@ in
     # TODO assertions
     home.packages = optional (cfg.package != null) (
       cfg.package.override {
-        inherit (cfg) channel nativeWayland;
+        inherit (cfg) channel nativeWayland extraShellArgs;
       }
     );
   };

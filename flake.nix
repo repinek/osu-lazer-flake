@@ -36,6 +36,6 @@
         }
       );
 
-      homeManagerModules.default = import ./modules/home-manager.nix { inherit self; };
+      homeManagerModules.osu-lazer = import ./modules/home-manager.nix { inherit self; };
     };
 }

@@ -1,0 +1,42 @@
+name: Update nixpkgs and fetch osu lazer update
+
+permissions:
+  contents: write
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  workflow_dispatch:
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Set up Nix
+        uses: DeterminateSystems/determinate-nix-action@v3
+
+      - name: Update nixpkgs
+        run: nix flake update nixpkgs
+
+      - name: Update osu
+        run: ./osu-lazer-bin/update.sh
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add flake.lock osu-lazer-bin/releases.json README.md
+
+          # Check $status, 0 or 1
+          if git diff --cached --quiet; then
+            echo "No changes to commit"
+            exit 0
+          fi
+
+          git commit -m "chore: update nixpkgs and osu!lazer"
+          git push

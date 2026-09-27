@@ -11,19 +11,7 @@
 let
   pname = "osu-lazer-bin";
 
-  releases = {
-    lazer = {
-      version = "2026.921.0";
-      tag = "lazer";
-      hash = "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0=";
-    };
-
-    tachyon = {
-      version = "2026.918.0";
-      tag = "tachyon";
-      hash = "sha256-4wwtNWDqghwuJyvKz8pXuy0UfKAlwamV7UW82im6CFQ=";
-    };
-  };
+  releases = builtins.fromJSON (builtins.readFile ./releases.json);
 
   release =
     if channel == "lazer" then
@@ -36,7 +24,7 @@ let
     else
       throw "osu-lazer-bin: channel must be \"lazer\" or \"tachyon\"";
 
-  inherit (release) version tag hash;
+  inherit (release) tag version hash;
 
   src =
     {

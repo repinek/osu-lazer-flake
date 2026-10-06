@@ -1,12 +1,12 @@
 {
   "lazer": {
     "tag": "lazer",
-    "version": "2026.921.0",
-    "hash": "sha256-3O2UY7UBAJyV2+2JGr0vCswu+4TuQzb1scw7fASl/H0="
+    "version": "2026.1005.0",
+    "hash": "sha256-KEEI5lNzqDOb7spA4sFLFSjBd71s4eshQHY5+OUI2i4="
   },
   "tachyon": {
     "tag": "tachyon",
-    "version": "2026.1004.0",
-    "hash": "sha256-4NDGeV7f1AxI/xUJnlRL5MGMDzoxu3O0GypoIv27ztE="
+    "version": "2026.1005.1",
+    "hash": "sha256-dC/R7h0OkWGrRhiK5G5lgFfghJouCNKQuW+Lac9UR24="
   }
 }

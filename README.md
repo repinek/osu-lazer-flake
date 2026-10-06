@@ -3,11 +3,11 @@
 > [!IMPORTANT]
 > This is an unofficial, community Nix flake. 
 
-<a href="https://github.com/ppy/osu/releases/tag/2026.921.0-lazer">
-  <img src="https://img.shields.io/badge/lazer-2026.921.0-ff66aa" alt="lazer version" />
+<a href="https://github.com/ppy/osu/releases/tag/2026.1005.0-lazer">
+  <img src="https://img.shields.io/badge/lazer-2026.1005.0-ff66aa" alt="lazer version" />
 </a>
-<a href="https://github.com/ppy/osu/releases/tag/2026.1004.0-tachyon">
-  <img src="https://img.shields.io/badge/tachyon-2026.1004.0-8866ee" alt="Tachyon version" />
+<a href="https://github.com/ppy/osu/releases/tag/2026.1005.1-tachyon">
+  <img src="https://img.shields.io/badge/tachyon-2026.1005.1-8866ee" alt="Tachyon version" />
 </a>
 
 ## What is this?

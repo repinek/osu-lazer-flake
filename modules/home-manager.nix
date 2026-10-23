@@ -58,6 +58,12 @@ in
       description = "Additional arguments passed to the osu! wrapper.";
     };
 
+    useGamemode = mkOption {
+      type = types.bool;
+      default = false;
+      description = "Adds gamemoderun into .desktop file. Requires gamemode to be installed and enabled on system";
+    };
+
     storagePath = mkOption {
       type = types.nullOr types.str;
       default = null;
@@ -126,7 +132,7 @@ in
   config = mkIf cfg.enable {
     home.packages = optional (cfg.package != null) (
       cfg.package.override {
-        inherit (cfg) channel nativeWayland extraShellArgs;
+        inherit (cfg) channel nativeWayland extraShellArgs useGamemode;
       }
     );
   };

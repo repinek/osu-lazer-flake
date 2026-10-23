@@ -69,6 +69,7 @@ Then add the package to your system:
       nativeWayland = true;
       channel = "tachyon";
       extraShellArgs = [ ];
+      useGamemode = true;
     })
   ];
 }
@@ -100,6 +101,7 @@ programs.osu-lazer = {
     "--set" "SDL_VIDEO_DOUBLE_BUFFER" "1"
     "--set" "PIPEWIRE_LATENCY" "256/48000"
   ];
+  useGamemode = true;
 
   # Available keys: https://github.com/ppy/osu/blob/master/osu.Game/Configuration/OsuConfigManager.cs
   gameSettings = {

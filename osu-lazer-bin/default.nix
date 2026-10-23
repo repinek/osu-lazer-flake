@@ -3,10 +3,12 @@
   stdenvNoCC,
   fetchurl,
   makeWrapper,
+  gamemode,
   appimageTools,
   channel ? "lazer",
   nativeWayland ? false,
   extraShellArgs ? [ ],
+  useGamemode ? false,
 }:
 let
   pname = "osu-lazer-bin";
@@ -75,7 +77,7 @@ appimageTools.wrapType2 (finalAttrs: {
       --set OSU_EXTERNAL_UPDATE_PROVIDER 1
 
     install -Dm444 ${finalAttrs.contents}/osu!.desktop $out/share/applications/osu!.desktop
-    substituteInPlace $out/share/applications/osu!.desktop --replace-fail "Exec=osu! %u" "Exec=$out/bin/osu! %u"
+    substituteInPlace $out/share/applications/osu!.desktop --replace-fail "Exec=osu! %u" "Exec=${lib.optionalString useGamemode "${lib.getExe gamemode} "}$out/bin/osu! %u"
     install -Dm444 ${finalAttrs.contents}/osu.png $out/share/icons/hicolor/256x256/apps/osu.png
   '';
 })

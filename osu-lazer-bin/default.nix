@@ -63,10 +63,6 @@ appimageTools.wrapType2 (finalAttrs: {
 
   extraPkgs = pkgs: [ pkgs.icu ];
 
-  extraBwrapArgs = [
-    "--ro-bind-try /etc/egl/egl_external_platform.d /etc/egl/egl_external_platform.d"
-  ];
-
   extraInstallCommands = ''
     . ${makeWrapper}/nix-support/setup-hook
     mv -v $out/bin/${pname} $out/bin/osu!

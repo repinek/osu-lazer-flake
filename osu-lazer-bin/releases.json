@@ -1,8 +1,8 @@
 {
   "lazer": {
     "tag": "lazer",
-    "version": "2026.1115.0",
-    "hash": "sha256-ROqHd7gjAHqg7bibdOF/V7BpiomsAXdH9ysBE1Me754="
+    "version": "2026.1117.0",
+    "hash": "sha256-TrvLW1gcA28WeFUAr1yNE60ebZMZb9Nr6PJFwqDqHS0="
   },
   "tachyon": {
     "tag": "tachyon",
